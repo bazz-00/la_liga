@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title%}2517{% endblock %}
+{% block body %}
+<table>
+  <thead>
+    <tr>
+      <td>Имя</td>
+      <td>Номер</td>
+      <td>Амплуа</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td> {% for el in players %}
+    <div class="alert alert-info">
+        {{ el.name }}
+    </div>
+    {% endfor %}
+      </td>
+      <td>{% for el in players %}
+    <div class="alert alert-info">
+        {{ el.number }}
+    </div>
+    {% endfor %}
+      </td>
+      <td>{% for el in players %}
+    <div class="alert alert-info">
+        {{ el.role }}
+    </div>
+    {% endfor %}
+      </td>
+    </tr>
+    <tr>
+      <td>Имя #2</td>
+      <td>Характеристики</td>
+      <td>Стоимость</td>
+    </tr>
+    <tr>
+      <td>Имя #3</td>
+      <td>Характеристики</td>
+      <td>Стоимость</td>
+    </tr>
+  </tbody>
+</table>
+
+
+{% endblock %}

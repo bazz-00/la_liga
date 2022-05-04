@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title%}2517{% endblock %}
+{% block body %}
+<h1> {{ reals.name }}</h1>
+<img src="https://www.donarit.com/images/sotrudniki/proizvodstvo/AQ.png" alt="альтернативный текст">
+<h3> Номер: {{ reals.number }}</h3>
+<h4> Возраст: {{ reals.age }}</h4>
+<h4> Рост: {{ reals.height }}</h4>
+<h4> Вес: {{ reals.weight }}</h4>
+<h4> Амплуа {{ reals.role }}</h4>
+{% endblock %}

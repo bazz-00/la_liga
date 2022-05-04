@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title%}2517{% endblock %}
+{% block body %}
+<h1> {{ reals.name }}</h1>
+<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0e4KMdptB7apS6xX0UkfPJ7lxMgvTB5Hhtw&usqp=CAU" alt="альтернативный текст">
+<h3> Номер: {{ reals.number }}</h3>
+<h4> Возраст: {{ reals.age }}</h4>
+<h4> Рост: {{ reals.height }}</h4>
+<h4> Вес: {{ reals.weight }}</h4>
+<h4> Амплуа {{ reals.role }}</h4>
+{% endblock %}

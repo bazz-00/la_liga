@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title%}Real Madrid{% endblock %}
+{% block body %}
+<h1>Real Madrid</h1>
+<ul>
+{% for pl in players %}
+        {% if pl.club == 'Real Madrid' %}
+            <li>
+                <ul>
+                    <li> <a href="real/{{ pl.id }}">{{pl.name}}</a></li>
+
+                </ul>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title%}create{% endblock %}
+{% block body %}
+<h1>Добавление футболиста</h1>
+<form method="post">
+    <input type="text" name="name" id="name" class="form-control" placeholder="Введите имя"><br>
+    <input type="text" name="number" id="number" class="form-control" placeholder="Введите номер"><br>
+    <input type="text" name="age" id="age" class="form-control" placeholder="Введите возраст"><br>
+    <input type="text" name="height" id="height" class="form-control" placeholder="Введите рост"><br>
+    <input type="text" name="weight" id="weight" class="form-control" placeholder="Введите вес"><br>
+    <select name="role">
+  <option value="вратарь">Вратарь</option>
+  <option value="защитник">Защитник</option>
+  <option value="полузащитник">Полузащитник</option>
+  <option value="нападающий">Нападающий</option>
+  </select> <br>
+    <select name="club" required="required">
+  <option value="">Клуб</option>
+  <option value="Real Madrid">Реал Мадрид</option>
+  <option value="Alaves">Алавес</option>
+  <option value="Athletic">Атлетик Бильбао</option>
+  <option value="Atletico">Атлетико Мадрид</option>
+  <option value="Barcelona">Барселона</option>
+  <option value="Betis">Бетис</option>
+  <option value="Sevilla">Севилья</option>
+  <option value="Valencia">Валенсия</option>
+  <option value="Villarreal">Вильярреал</option>
+  <option value="Granada">Гранада</option>
+  <option value="Cadiz">Кадис</option>
+  <option value="Levante">Леванте</option>
+  <option value="Mallorca">Мальорка</option>
+  <option value="Osasuna">Осасуна</option>
+  <option value="Rayo-Vallecano">Райо Вальекано</option>
+  <option value="Real-Sociedad">Реал Сосьедад</option>
+  <option value="Celta">Сельта</option>
+  <option value="Getafe">Хетафе</option>
+  <option value="Elche">Эльче</option>
+  <option value="Espanyol">Эспаньол</option>
+  </select> <br>
+    <input type="submit" class="btn btn-success" value="Отправить">
+</form>
+
+{% endblock %}

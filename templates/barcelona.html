@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title%}Barcelona{% endblock %}
+{% block body %}
+<h1>Barcelona</h1>
+<ul>
+{% for pl in players %}
+        {% if pl.club == 'Barcelona' %}
+            <li>
+                <ul>
+                    <li> <a href="barcelona/{{ pl.id }}">{{pl.name}}</a></li>
+
+                </ul>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}
