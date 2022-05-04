@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///la_liga.db'
 db = SQLAlchemy(app)
 engine = create_engine('sqlite:///la_liga.db', echo=False)
-a = parsing.sports_ru("https://www.sports.ru/alaves/team/")
+a = parsing.sports_ru("https://www.sports.ru/real/team/") #you need to change the names of commands to add to the table
 
 
 class Club(db.Model):
@@ -42,11 +42,18 @@ class Player(db.Model):
 Session = sessionmaker(bind=engine)
 session = Session()
 c = ['Алавес', 'Атлетик Бильбао', 'Атлетико Мадрид', 'Барселона', 'Бетис', 'Севилья', 'Валенсия', 'Вильярреал',
-     'Гранада', 'Кадис', 'Леванте', 'Мальорка', 'Осасуна', 'Райо Вальекано', 'Реал Сосьедад', 'Сельта', 'Хетафе',
+      'Гранада', 'Кадис', 'Леванте', 'Мальорка', 'Осасуна', 'Райо Вальекано', 'Реал Сосьедад', 'Сельта', 'Хетафе',
      'Эльче', 'Эспаньол', 'Реал Мадрид']
 for i in c:
     c1 = Club(name=i)
     session.add(c1)
+session.commit()
+Session = sessionmaker(bind=engine)
+session = Session()
+for i in a:
+    c1 = Player(number=i[0], name=i[1][2:-1], age=i[2], height=i[3], weight=i[4], role=i[5], club_id=20, club2='Real Madrid')
+    session.add(c1)
+
 session.commit()
 
 if __name__ == '__main__':
