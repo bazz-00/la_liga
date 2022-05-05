@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block title%}Real Madrid{% endblock %}
 {% block body %}
-<h1>Real Madrid</h1>
+<h1>{{ fet }}</h1>
 <ul>
 {% for pl in players %}
-        {% if pl.club == 'Real Madrid' %}
+        {% if pl.club_id == fet %}
             <li>
                 <ul>
-                    <li> <a href="real/{{ pl.id }}">{{pl.name}}</a></li>
+                    <li> <a href="{{ fet }}/{{ pl.id }}">{{pl.name}}</a></li>
 
                 </ul>
             </li>

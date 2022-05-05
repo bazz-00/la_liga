@@ -3,27 +3,15 @@
 {% block body %}
     <h1>Ла Лига</h1>
     <ul>
- <li> Алавес</li>
- <li>Атлетик Бильбао</li>
- <li>Атлетико Мадрид</li>
- <li><a href="barcelona">Барселона</a></li>
- <li>Бетис</li>
- <li>Севилья</li>
- <li>Валенсия</li>
- <li>Вильярреал</li>
- <li>Гранада</li>
- <li>Кадис</li>
- <li>Леванте</li>
- <li>Мальорка</li>
- <li>Осасуна</li>
- <li>Райо Вальекано</li>
- <li>Реал Сосьедад</li>
- <li>Сельта</li>
- <li>Хетафе</li>
- <li>Эльче</li>
- <li>Эспаньол</li>
- <li><a href="real">Реал Мадрид</a></li>
-                </ul>
+ <li> {% for cl in club %}</li>
+     <li>
+      <ul>
+       <li> <a href="/{{ cl.id }}"> {{cl.name}}</a></li>
+
+      </ul>
+     </li>
+      {% endfor %}
+    </ul>
 
 {% endblock %}
 

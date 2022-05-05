@@ -3,14 +3,15 @@ from flask_sqlalchemy import SQLAlchemy
 from data_base.sqlal import Player, Club
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///football.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data_base/la_liga.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
 @app.route('/')
 def index():
-    clubs = Club.query.all()
-    return render_template('index.html', clubs=clubs)
+    club = Club.query.all()
+    return render_template('index.html', club=club)
 
 
 @app.route('/about')
@@ -19,14 +20,15 @@ def about():
     return render_template('about.html', players=players)
 
 
-@app.route('/real')
-def real():
+@app.route('/<int:fet>')
+def real(fet):
     players = Player.query.order_by(Player.id).all()
-    return render_template('real.html', players=players)
+    club = Club.query.order_by(Club.id).all()
+    return render_template('real.html', players=players, club=club, fet=fet)
 
 
-@app.route('/real/<int:id>')
-def real_player(id):
+@app.route('/<int:club_id>/<int:id>')
+def real_player(club_id, id):
     reals = Player.query.get(id)
     return render_template('real_player.html', reals=reals)
 
@@ -35,6 +37,7 @@ def real_player(id):
 def barcelona():
     players = Player.query.order_by(Player.id).all()
     return render_template('barcelona.html', players=players)
+
 
 @app.route('/barcelona/<int:id>')
 def barca_player(id):
@@ -51,8 +54,8 @@ def create_player():
         height = request.form['height']
         weight = request.form['weight']
         role = request.form['role']
-        club = request.form['club']
-        player = Player(name=name, number=number, age=age, height=height, weight=weight, role=role, club=club)
+        club2 = request.form['club2']
+        player = Player(name=name, number=number, age=age, height=height, weight=weight, role=role, club2=club2)
         try:
             db.session.add(player)
             db.session.commit()
