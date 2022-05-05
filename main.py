@@ -33,18 +33,6 @@ def real_player(club_id, id):
     return render_template('real_player.html', reals=reals)
 
 
-@app.route('/barcelona')
-def barcelona():
-    players = Player.query.order_by(Player.id).all()
-    return render_template('barcelona.html', players=players)
-
-
-@app.route('/barcelona/<int:id>')
-def barca_player(id):
-    reals = Player.query.get(id)
-    return render_template('barcelona_player.html', reals=reals)
-
-
 @app.route('/create_player', methods=['POST', 'GET'])
 def create_player():
     if request.method == 'POST':
@@ -54,8 +42,9 @@ def create_player():
         height = request.form['height']
         weight = request.form['weight']
         role = request.form['role']
-        club2 = request.form['club2']
-        player = Player(name=name, number=number, age=age, height=height, weight=weight, role=role, club2=club2)
+        club2 = list(map(str, request.form['club2'].split('-')))
+        print(club2)
+        player = Player(name=name, number=number, age=age, height=height, weight=weight, role=role, club2=club2[0], club_id=club2[1])
         try:
             db.session.add(player)
             db.session.commit()
