@@ -2,6 +2,13 @@
 {% block title%}create{% endblock %}
 {% block body %}
 <h1>Добавление футболиста</h1>
+{% for msg in get_flashed_messages() %}
+
+<div style="background: #F4FC03; border:3px #00B344  ridge; width: 200px; padding: 10px 0 10px 15px;  margin:20px;"
+     class="flash">{{msg}}
+
+</div>
+{% endfor %}
 <form method="post">
     <input type="text" name="name" id="name" class="form-control" placeholder="Введите имя"><br>
     <input type="text" name="number" id="number" class="form-control" placeholder="Введите номер"><br>
