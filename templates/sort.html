@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title%}sort{% endblock %}
+{% block body %}
+<li> {% for pl in players %}</li>
+
+      <ul>
+       <li>{{pl.name}}</li>
+
+
+      </ul>
+
+      {% endfor %}
+{% endblock %}

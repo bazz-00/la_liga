@@ -1,10 +1,11 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from data_base.sqlal import Player, Club
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data_base/la_liga.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = '12345'
 db = SQLAlchemy(app)
 
 
@@ -48,11 +49,17 @@ def create_player():
         try:
             db.session.add(player)
             db.session.commit()
-            return redirect('/')
+            flash('футболист добавлен')
+            return redirect('/create_player')
         except:
             return "Ошибка"
     else:
         return render_template('create_player.html')
+
+@app.route('/sort', methods=['POST', 'GET'])
+def sort():
+    players = Player.query.order_by(Player.name).all()
+    return render_template('sort.html', players=players)
 
 
 if __name__ == '__main__':
