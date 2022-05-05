@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% block title%}Real Madrid{% endblock %}
 {% block body %}
-<h1>{{ fet }}</h1>
+{% for cl in club %}
+    {% if cl.id == fet %}
+    <h1>{{cl.name}}</h1>
+{% endif %}
+{% endfor %}
 <ul>
 {% for pl in players %}
         {% if pl.club_id == fet %}
