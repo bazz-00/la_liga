@@ -7,7 +7,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data_base/la_liga.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '12345'
 db = SQLAlchemy(app)
-
+list_role = ['вратарь', 'защитник', 'полузащитник', 'нападающий']
 
 @app.route('/')
 def index():
@@ -76,6 +76,10 @@ def sort():
             players = Player.query.order_by(Player.role).all()
         elif request.form.get('club') == 'club':
             players = Player.query.order_by(Player.club2).all()
+        elif request.form.get('role2'):
+            for i in list_role:
+                if i == request.form.get('role2'):
+                    players = Player.query.filter_by(role=i).all()
     return render_template('sort.html', players=players)
 
 

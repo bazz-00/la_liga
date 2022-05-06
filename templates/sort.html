@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block title%}2517{% endblock %}
 {% block body %}
+  <style type="text/css">
+   body { margin: 0; }
+   #content { position: absolute; }
+   #content { overflow: auto; padding: 10px; }
+   #content {
+    top: 12px;
+    left: 900px;
+    bottom: 0; right: 0;
+
+  </style>
 <table>
   <thead>
     <tr><form method="post">
@@ -58,4 +68,17 @@
     </div>
     {% endfor %}
 
-    {% endblock %}
+<div id="content">
+   <h2>Плов по-фергански</h2>
+    <form method="post">
+<select name="role2">
+  <option value="">АМПЛУА</option>
+  <option value="вратарь">Вратарь</option>
+  <option value="защитник">Защитник</option>
+  <option value="полузащитник">Полузащитник</option>
+  <option value="нападающий">Нападающий</option>
+  </select>
+        <br>
+    <input type="submit" class="btn btn-success" value="Отправить">
+        </form>
+{% endblock %}
