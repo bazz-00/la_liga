@@ -45,7 +45,8 @@ def create_player():
         role = request.form['role']
         club2 = list(map(str, request.form['club2'].split('-')))
         print(club2)
-        player = Player(name=name, number=number, age=age, height=height, weight=weight, role=role, club2=club2[0], club_id=club2[1])
+        player = Player(name=name, number=number, age=age, height=height, weight=weight, role=role, club2=club2[0],
+                        club_id=club2[1])
         try:
             db.session.add(player)
             db.session.commit()
@@ -56,9 +57,25 @@ def create_player():
     else:
         return render_template('create_player.html')
 
+
 @app.route('/sort', methods=['POST', 'GET'])
 def sort():
     players = Player.query.order_by(Player.name).all()
+    if request.method == 'POST':
+        if request.form.get('number') == 'number':
+            players = Player.query.order_by(Player.number).all()
+        elif request.form.get('name') == 'name':
+            players = Player.query.order_by(Player.name).all()
+        elif request.form.get('age') == 'age':
+            players = Player.query.order_by(Player.age).all()
+        elif request.form.get('height') == 'height':
+            players = Player.query.order_by(Player.height).all()
+        elif request.form.get('weight') == 'weight':
+            players = Player.query.order_by(Player.weight).all()
+        elif request.form.get('role') == 'role':
+            players = Player.query.order_by(Player.role).all()
+        elif request.form.get('club') == 'club':
+            players = Player.query.order_by(Player.club2).all()
     return render_template('sort.html', players=players)
 
 
