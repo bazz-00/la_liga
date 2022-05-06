@@ -1,13 +1,61 @@
 {% extends 'base.html' %}
-{% block title%}sort{% endblock %}
+{% block title%}2517{% endblock %}
 {% block body %}
-<li> {% for pl in players %}</li>
+<table>
+  <thead>
+    <tr><form method="post">
+      <td><button value="name" name="name" type="submit">Имя</button></td>
+      <td><button value="number" name="number" type="submit">Номер</button></td>
+      <td><button value="age" name="age" type="submit">Возраст</button></td>
+      <td><button value="height" name="height" type="submit">Рост</button></td>
+      <td><button value="weight" name="weight" type="submit">Вес</button></td>
+      <td><button value="role" name="role" type="submit">Амплуа</button></td>
+      <td><button value="club" name="club" type="submit">Клуб</button></td>
+</form>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td height="250"> {% for el in players %}
+    <div class="alert alert-info">
+        {{ el.name }}
+    </div>
+    {% endfor %}
+      </td>
+      <td>{% for el in players %}
+    <div class="alert alert-info">
+        {{ el.number }}
+    </div>
+    {% endfor %}
+      </td>
+      <td>{% for el in players %}
+    <div class="alert alert-info">
+        {{ el.age }}
+    </div>
+    {% endfor %}
+                </td>
+      <td>{% for el in players %}
+    <div class="alert alert-info">
+        {{ el.height }}
+    </div>
+    {% endfor %}
+                </td>
+      <td>{% for el in players %}
+    <div class="alert alert-info">
+        {{ el.weight }}
+    </div>
+    {% endfor %}
+                </td>
+      <td>{% for el in players %}
+    <div class="alert alert-info">
+        {{ el.role }}
+    </div>
+    {% endfor %}
+                </td>
+      <td>{% for el in players %}
+    <div class="alert alert-info">
+        {{ el.club }}
+    </div>
+    {% endfor %}
 
-      <ul>
-       <li>{{pl.name}}</li>
-
-
-      </ul>
-
-      {% endfor %}
-{% endblock %}
+    {% endblock %}
