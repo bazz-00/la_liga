@@ -1,6 +1,7 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import Flask, render_template, url_for, request, redirect, flash, make_response, session
 from flask_sqlalchemy import SQLAlchemy
-from data_base.sqlal import Player, Club
+from data_base.sqlal import Player, Club, User
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data_base/la_liga.db'
@@ -8,6 +9,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '12345'
 db = SQLAlchemy(app)
 list_role = ['вратарь', 'защитник', 'полузащитник', 'нападающий']
+
 
 @app.route('/')
 def index():
@@ -44,7 +46,7 @@ def create_player():
         weight = request.form['weight']
         role = request.form['role']
         club2 = list(map(str, request.form['club2'].split('-')))
-        print(club2)
+
         player = Player(name=name, number=number, age=age, height=height, weight=weight, role=role, club2=club2[0],
                         club_id=club2[1])
         try:
@@ -81,6 +83,29 @@ def sort():
                 if i == request.form.get('role2'):
                     players = Player.query.filter_by(role=i).all()
     return render_template('sort.html', players=players)
+
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if request.method == 'POST':
+        if len(request.form['email']) > 4 and len(request.form['psw']) > 4 \
+                and request.form['psw'] == request.form['psw']:
+            hash = generate_password_hash(request.form['psw'])
+            user = User(name=request.form['name'], email=request.form['email'], password=hash)
+            try:
+                db.session.add(user)
+                db.session.commit()
+                flash('вы зарегистрированы')
+                return redirect('/login')
+            except:
+                return "Ошибка"
+        else:
+            return render_template('register.html')
 
 
 if __name__ == '__main__':
