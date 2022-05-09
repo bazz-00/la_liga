@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, request, redirect, flash, mak
 from flask_sqlalchemy import SQLAlchemy
 from data_base.sqlal import Player, Club, User
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, login_user, login_required, logout_user
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data_base/la_liga.db'
@@ -9,6 +10,14 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '12345'
 db = SQLAlchemy(app)
 list_role = ['вратарь', 'защитник', 'полузащитник', 'нападающий']
+login_manager = LoginManager(app)
+login_manager.login_view = 'login_page'
+login_manager.login_message = 'Авторизуйтесь для доступа к закрытым страницам'
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.query(User).get(user_id)
 
 
 @app.route('/')
@@ -37,6 +46,7 @@ def real_player(club_id, id):
 
 
 @app.route('/create_player', methods=['POST', 'GET'])
+@login_required
 def create_player():
     if request.method == 'POST':
         name = request.form['name']
@@ -85,27 +95,49 @@ def sort():
     return render_template('sort.html', players=players)
 
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-
 @app.route('/register', methods=['POST', 'GET'])
 def register():
+    login = request.form.get('name')
+    email = request.form.get('email')
     if request.method == 'POST':
         if len(request.form['email']) > 4 and len(request.form['psw']) > 4 \
                 and request.form['psw'] == request.form['psw']:
             hash = generate_password_hash(request.form['psw'])
-            user = User(name=request.form['name'], email=request.form['email'], password=hash)
+            user = User(login=login, email=email, password=hash)
             try:
                 db.session.add(user)
                 db.session.commit()
                 flash('вы зарегистрированы')
-                return redirect('/login')
+                return redirect('/register')
             except:
                 return "Ошибка"
+    else:
+        return render_template('register.html')
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def login_page():
+    login = request.form.get('login')
+    password = request.form.get('password')
+    if login and password:
+        user = User.query.filter_by(login=login).first()
+        if user and check_password_hash(user.password, password):
+            rm = True if request.form.get('remainme') else False
+            login_user(user, remember=rm)
+
+            return redirect('/')
         else:
-            return render_template('register.html')
+            flash('Логин или пароль не корректны')
+
+    return render_template('login.html')
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('You have logged out.')
+    return redirect('/')
 
 
 if __name__ == '__main__':
